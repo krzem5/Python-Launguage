@@ -1,0 +1,67 @@
+// Variation of Bresenham's Line Algorithm made in CPL
+
+
+
+<void> func line(<int> x0,<int> y0,<int> x1,<int> y1) {
+	println("Start-X: "+x0+" Start-Y: "+y0+" End-X: "+x1+" End-Y: "+y1+"\n");
+	var <string> s="";
+	var <int> dx=x1-x0,<int> dy=y1-y0;
+	if (dy>dx){
+		var <int> xi=1;
+		if (dx<0){
+			xi=-1;
+			dx*=-1;
+		}
+		var <int> D=2*dx-dy;
+		var <int> x=0;
+		for (<int> y=y0;y<=y1;y+=1){
+			for (<int> i=0;i<=x;i+=1){
+				s+=" ";
+			}
+			if ((x==x0&&y==y0)||(x==x1&&y==y1)){
+				s+="O\n";
+			}
+			else{
+				s+="X\n";
+			}
+			if (D>0){
+				x+=xi;
+				D-=2*dy;
+			}
+			D+=2*dx;
+		}
+	}
+	else{
+		var <int> yi=1;
+		if (dy<0){
+			yi=-1;
+			dy*=-1;
+		}
+		var <int> D=2*dy-dx;
+		var <int> y=0;
+		var <bool> nl=true;
+		for (<int> x=x0;x<=x1;x+=1){
+			if (nl==true){
+				for (<int> i=0;i<x;i+=1){
+					s+=" ";
+				}
+				nl=false;
+			}
+			if ((x==x0&&y==y0)||(x==x1&&y==y1)){
+				s+="O";
+			}
+			else{
+				s+="X";
+			}
+			if (D>0){
+				s+="\n";
+				nl=true;
+				y+=yi;
+				D-=2*dx;
+			}
+			D+=2*dy;
+		}
+		s+="\n";
+	}
+	print(s);
+}
