@@ -1,0 +1,193 @@
+%YAML 1.2
+---
+name: CPL
+file_extensions: [cpl]
+scope: text.plain
+contexts:
+  main:
+    - match: '((//).*)$'
+      captures:
+        1: comment.line
+        2: punctuation.definition.comment
+
+    - match: '\\(\"|\t|\n)'
+      clear_scope: string.*
+      scope: string.quoted.double meta.string constant.character.escape
+
+    - match: '(\")([^\"]*)(\")'
+      captures:
+        1: string.quoted.double punctuation.definition.string.begin meta.string
+        2: string.quoted.double meta.string
+        3: string.quoted.double punctuation.definition.string.end meta.string
+    - match: '(\")(\")'
+      captures:
+        1: string.quoted.double punctuation.definition.string.begin meta.string
+        2: string.quoted.double punctuation.definition.string.end meta.string
+
+    - match: '\b(if|else if|else)\b'
+      scope: keyword.control.conditional
+
+    - match: '\b(for|while)\b'
+      scope: keyword.control
+
+    - match: '\breturn\b'
+      scope: keyword.other
+
+    - match: '\b(-)?[0-9][0-9_]*\.[0-9]+\b'
+      scope: constant.numeric.float.decimal
+
+    - match: '\b(-)?[0-9][0-9_]*\b'
+      scope: constant.numeric.integer.decimal
+
+    - match: '\b(true|false|null)\b'
+      scope: constant.language
+
+    - match: '(\<)([A-Za-z_]+)(\>) (func) '
+      captures:
+        1: storage.modifier meta.generic punctuation.definition.generic.begin
+        2: entity.name.type meta.generic storage.type
+        3: storage.modifier meta.generic punctuation.definition.generic.end
+        4: keyword.declaration.function storage.type.function
+      set:
+      - match: '\b[^A-Za-z_][^\(]*'
+        scope: invalid.illegal
+        pop: true
+      - match: '\b[A-Za-z_][A-Za-z_0-9]*'
+        scope: entity.name.function.constructor
+        set:
+        - match: '\('
+          scope: meta.parens punctuation.section.parens.begin
+          set: func_arg
+
+    - match: '\('
+      scope: meta.parens punctuation.section.parens.begin
+      push:
+        - match: '\)'
+          scope: meta.parens punctuation.section.parens.end
+          pop: true
+        - include: main
+    - match: '\)'
+      scope: invalid.illegal
+
+    - match: '\{'
+      scope: meta.block punctuation.section.block.begin
+      push:
+        - match: '\}'
+          scope: meta.block punctuation.section.block.end
+          pop: true
+        - include: main
+    - match: '\}'
+      scope: invalid.illegal
+
+    - match: '\<'
+      scope: meta.generic punctuation.definition.generic.begin
+      push:
+        - match: '\>'
+          scope: meta.generic punctuation.definition.generic.end
+          pop: true
+        - include: main
+    - match: '\>'
+      scope: invalid.illegal
+
+    - match: '\b(var|const)\b'
+      scope: storage.type
+      set: var_arg
+
+    - match: '(;)\n'
+      captures:
+        1: punctuation.terminator
+
+    - match: '(\+\=|\-\=|\*\=|\/\=|\%\=|\^\=|\=)'
+      captures:
+        1: keyword.operator.arithmetic
+
+    - match: '(\+|\-|\*|\/|\%|\^)'
+      captures:
+        1: keyword.operator.arithmetic
+
+    - match: '\b(int|float|str|bool|sin|cos|tan|abs|floor|ceil|min|max|sqrt|atan|atan2|random|print|error|warn)(\()'
+      captures:
+        1: support.function
+        2: meta.parens punctuation.section.parens.begin
+      push:
+      - match: '\)'
+        scope: meta.parens punctuation.section.parens.end
+        pop: true
+      - include: main
+
+    - match: '\b([A-Za-z_][A-Za-z_0-9]*)(\()'
+      captures:
+        1: entity.name.function variable.function
+        2: meta.parens punctuation.section.parens.begin
+      push:
+      - match: '\)'
+        scope: meta.parens punctuation.section.parens.end
+        pop: true
+      - include: main
+
+    - match: '\bimport '
+      scope: keyword.control.import
+      set:
+      - match: '([A-Za-z_0-9./:]+)(;?)($?)'
+        captures:
+          1: entity.name.namespace
+          2: punctuation.terminator
+        pop: true
+
+  func_arg:
+    - match: '(\<)([A-Za-z_]*)(\>)'
+      captures:
+        1: storage.modifier meta.generic punctuation.definition.generic.begin
+        2: entity.name.type meta.generic storage.type
+        3: storage.modifier meta.generic punctuation.definition.generic.end
+      set:
+      - match: '[A-Za-z_][A-Za-z_0-9]*'
+        scope: variable.parameter
+        set:
+          - match: '\)'
+            scope: meta.parens punctuation.section.parens.end
+            set:
+            - match: '\{'
+              scope: meta.block punctuation.section.block.begin
+              push:
+              - match: '\}'
+                scope: meta.block punctuation.section.block.end
+                pop: true
+              - include: main
+            - include: main
+          - match: ','
+            scope: punctuation.separator
+            set: func_arg
+
+  var_arg:
+  - match: '(\<)([A-Za-z_]*)(\>)'
+    captures:
+      1: storage.modifier
+      2: storage.type
+      3: storage.modifier
+    set:
+    - match: '[A-Za-z_][A-Za-z_0-9]*'
+      scope: punctuation.definition.variable
+      set:
+        - match: ';|\n'
+          pop: true
+        - match: ','
+          scope: punctuation.separator
+          set: var_arg
+        - match: '='
+          scope: keyword.operator.assignment
+          set:
+            - match: '\"'
+              scope: punctuation.definition.string.begin
+              set:
+              - meta_scope: string.quoted.double
+              - match: '\\["nt\\]'
+                scope: constant.character.escape
+              - match: '\"|$'
+                scope: punctuation.definition.string.end
+                set: var_arg
+            - include: main
+            - match: ';|\n'
+              pop: true
+            - match: ','
+              set: var_arg
