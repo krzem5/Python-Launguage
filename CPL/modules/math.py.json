@@ -1,0 +1,54 @@
+{
+	"functions": [
+		{
+			"func_name": "_abs",
+			"name": "abs",
+			"params": [
+				"float"
+			],
+			"return_type": "float"
+		},
+		{
+			"func_name": "_random",
+			"name": "random",
+			"params": [],
+			"return_type": "float"
+		},
+		{
+			"func_name": "_min",
+			"name": "min",
+			"params": null,
+			"return_type": "float"
+		},
+		{
+			"func_name": "_max",
+			"name": "max",
+			"params": null,
+			"return_type": "float"
+		},
+		{
+			"func_name": "_floor",
+			"name": "floor",
+			"params": [
+				"float"
+			],
+			"return_type": "int"
+		},
+		{
+			"func_name": "_ceil",
+			"name": "ceil",
+			"params": [
+				"float"
+			],
+			"return_type": "int"
+		},
+		{
+			"func_name": "_sign",
+			"name": "sign",
+			"params": [
+				"float"
+			],
+			"return_type": "int"
+		}
+	]
+}
