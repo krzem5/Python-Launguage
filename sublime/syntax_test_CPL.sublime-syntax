@@ -1,0 +1,280 @@
+// SYNTAX TEST "Packages/User/CPL.sublime-syntax"
+
+
+
+// Comment "" {}
+// <- punctuation.definition.comment
+ // <- punctuation.definition.comment
+//^^^^^^^^^^^^^^ comment.line
+
+
+
+import ../Kllj_sJJ.cpl;
+// <- keyword.control.import
+ // <- keyword.control.import
+//^^^^ keyword.control.import
+//     ^^^^^^^^^^^^^^^ entity.name.namespace
+//                    ^ punctuation.terminator
+
+
+
+<int> func _f(<string>a, <bool>b)
+// <- storage.modifier meta.generic punctuation.definition.generic.begin
+ // <- entity.name.type meta.generic storage.type
+//^^ entity.name.type meta.generic storage.type
+//  ^ storage.modifier meta.generic punctuation.definition.generic.end
+//   ^ text.plain
+//    ^^^^ keyword.declaration.function storage.type.function
+//        ^ text.plain
+//         ^^ entity.name.function.constructor
+//           ^ meta.parens punctuation.section.parens.begin
+//            ^ storage.modifier meta.generic punctuation.definition.generic.begin
+//              ^^^^^ entity.name.type meta.generic storage.type
+//                   ^ storage.modifier meta.generic punctuation.definition.generic.end
+//                    ^ variable.parameter
+//                     ^ punctuation.separator
+//                      ^ text.plain
+//                       ^ storage.modifier meta.generic punctuation.definition.generic.begin
+//                        ^^^^ entity.name.type meta.generic storage.type
+//                            ^ storage.modifier meta.generic punctuation.definition.generic.end
+//                             ^ variable.parameter
+//                              ^ meta.parens punctuation.section.parens.end
+
+
+
+{
+// <- meta.block punctuation.section.block.begin
+
+
+
+    print(a,b,a+b,int(a)+abs(-6));
+//  ^^^^^ support.function
+//       ^ meta.parens punctuation.section.parens.begin
+//        ^ variable.other
+//         ^ punctuation.separator
+//          ^ variable.other
+//           ^ punctuation.separator
+//            ^ variable.other
+//             ^ keyword.operator.arithmetic
+//              ^ variable.other
+//               ^ punctuation.separator
+//                ^^^ support.function
+//                   ^ meta.parens punctuation.section.parens.begin
+//                    ^ variable.other
+//                     ^ meta.parens punctuation.section.parens.end
+//                      ^ keyword.operator.arithmetic
+//                       ^^^ support.function
+//                          ^ text.plain
+//                           ^ keyword.operator.arithmetic
+//                            ^ constant.numeric.integer.decimal
+//                             ^ meta.parens punctuation.section.parens.end
+//                              ^ meta.parens punctuation.section.parens.end
+//                               ^ punctuation.terminator
+
+
+
+    return null;
+//  ^^^^^^ keyword.other
+//        ^ text.plain
+//         ^^^^ constant.language
+//             ^ punctuation.terminator
+
+
+
+}
+// <- meta.block punctuation.section.block.end
+
+
+
+_f("   aaaaa\"t\a",abs());
+// <- entity.name.function variable.function
+ // <- entity.name.function variable.function
+//^ meta.parens punctuation.section.parens.begin
+// ^ string.quoted.double punctuation.definition.string.begin meta.string
+//  ^^^^^^^^ string.quoted.double meta.string
+//          ^^ string.quoted.double meta.string constant.character.escape
+//            ^^ string.quoted.double meta.string
+//              ^ punctuation.definition.string.end meta.string
+//               ^ punctuation.separator
+//                ^^^ support.function
+//                   ^ meta.parens punctuation.section.parens.begin
+//                    ^ meta.parens punctuation.section.parens.end
+//                     ^ meta.parens punctuation.section.parens.end
+//                      ^ punctuation.terminator
+
+
+
+if ("str"==f)
+// <- keyword.control.conditional
+ // <- keyword.control.conditional
+//^ text.plain
+// ^ meta.parens punctuation.section.parens.begin
+//  ^ punctuation.definition.string.begin meta.string
+//   ^^^ string.quoted.double meta.string
+//      ^ punctuation.definition.string.end meta.string
+//       ^^ keyword.operator.logical
+//         ^ variable.other
+//          ^ meta.parens punctuation.section.parens.end
+
+
+
+{
+// <- meta.block punctuation.section.block.start meta.braces punctuation.section.braces.start
+
+
+
+}
+// <- meta.block punctuation.section.block.end
+
+
+
+else if (k&28==5){
+// <- keyword.control.conditional
+ // <- keyword.control.conditional
+//^^^^^ keyword.control.conditional
+//     ^ text.plain
+//      ^ meta.parens punctuation.section.parens.begin
+//       ^ variable.other
+//        ^ keyword.operator.bitwise
+//         ^^ constant.numeric.integer.decimal
+//           ^^ keyword.operator.logical
+//             ^ constant.numeric.integer.decimal
+//              ^ meta.parens punctuation.section.parens.end
+//               ^ meta.block punctuation.section.block.tart meta.braces punctuation.section.braces.start
+
+
+
+}
+// <- meta.block punctuation.section.block.end
+
+
+
+else {
+// <- keyword.control.conditional
+ // <- keyword.control.conditional
+//^^ keyword.control.conditional
+//  ^ text.plain
+//   ^ meta.block punctuation.section.block.start meta.braces punctuation.section.braces.start
+
+
+
+}
+// <- meta.block punctuation.section.block.end
+
+
+
+while (!exit){
+// <- keyword.control
+ // <- keyword.control
+//^^^ keyword.control
+//   ^ text.plain
+//    ^ meta.parens punctuation.section.parens.begin
+//     ^ keyword.operator.logical
+//      ^^^^ variable.other
+//          ^ meta.parens punctuation.section.parens.end
+//           ^ meta.block punctuation.section.block.start meta.braces punctuation.section.braces.start
+
+
+
+	if (random(0,2.0)==1){
+//  ^^ keyword.control.conditional
+//    ^ meta.parens punctuation.section.parens.begin
+//     ^ text.plain
+//      ^^^^^^ support.function
+//            ^ meta.parens punctuation.section.parens.begin
+//             ^ constant.numeric.integer.decimal
+//              ^ punctuation.separator
+//               ^^^ constant.numeric.float.decimal
+//                  ^ meta.parens punctuation.section.parens.end
+//                   ^^ keyword.operator.logical
+//                     ^ constant.numeric.integer.decimal
+//                      ^ meta.parens punctuation.section.parens.end
+//                       ^ meta.block punctuation.section.block.start meta.braces punctuation.section.braces.start
+
+
+
+		exit=true;
+//      ^^^^ variable.other
+//          ^ keyword.operator.assigment
+//           ^^^^ constant.language
+//               ^ punctuation.terminator
+
+
+
+}}
+// < -meta.block punctuation.section.block.end
+ // <- meta.block punctuation.section.block.end
+
+
+
+for (<int> i=0,<float>j=5;i!=5;i++,j=i*0.5){
+// <- keyword.control
+ // <- keyword.control
+//^ keyword.control
+// ^ text.plain
+//  ^ meta.parens punctuation.section.parens.begin
+//   ^ storage.modifier meta.generic punctuation.definition.generic.begin
+//    ^^^ storage.type entity.name.type meta.generic
+//       ^ storage.modifier meta.generic punctuation.definition.generic.end
+//        ^ text.plain
+//         ^ variable.parameter
+//          ^ keyword.operator.assigment
+//           ^ constant.numeric.integer.decimal
+//            ^ punctuation.separator
+//             ^ storage.modifier meta.generic punctuation.definition.generic.begin
+//              ^^^^^ storage.type entity.name.type meta.generic
+//                   ^ storage.modifier meta.generic punctuation.definition.generic.end
+//                    ^ text.plain
+//                     ^ keyword.operator.assigment
+//                      ^ constant.numeric.integer.decimal
+//                       ^ punctuation.separator
+//                        ^ variable.other
+//                         ^^ keyword.operator.logical
+//                           ^ constant.numeric.integer.decimal
+//                            ^ punctuation.separator
+//                             ^ variable.other
+//                              ^^ keyword.operator.assigment
+//                                ^ punctuation.separator
+//                                 ^ variable.other
+//                                  ^ keyword.operator.assigment
+//                                   ^ variable.other
+//                                    ^ keyword.operator.arithmetic
+//                                     ^^^ constant.numeric.float.decimal
+//                                        ^ meta.parens punctuation.section.parens.end
+//                                         ^ meta.block punctuation.section.block.start meta.braces punctuation.section.braces.start
+
+
+
+	warn(i,j);
+//  ^^^^ support.function
+//      ^ meta.parens punctuation.section.parens.begin
+//       ^ variable.other
+//        ^ punctuation.separator
+//         ^ variable.other
+//          ^ meta.parens punctuation.section.parens.end
+//           ^ punctuation.terminator
+
+
+
+}
+// <- meta.block punctuation.section.block.end
+
+
+
+var <int> k=2_08,<float> a=20,<float>k=2_0.7,<string> dd="d",<bool> f=true,<float> a,<bool> k=4;
+
+
+
+const <int> dkue=390;
+// <- 
+ // <- 
+//^^^ 
+//   ^ text.plain
+//    ^ storage.modifier meta.generic punctuation.definition.generic.begin
+//     ^^^ storage.type entity.name.type meta.generic
+//        ^ storage.modifier meta.generic punctuation.definition.generic.end
+//         ^ text.plain
+//          ^^^^ punctuation.definition.variable variable.other.constant
+//              ^ keyword.operator.assignment
+//               ^^^ constant.numeric.integer.decimal
+//                  ^ punctuation.terminator
