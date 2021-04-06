@@ -14,7 +14,7 @@ def _random(params):
 def _min(params):
 	v=None
 	for p in params:
-		if (v==None):
+		if (v is None):
 			v=p.value
 		else:
 			v=min(v,p.value)
@@ -25,7 +25,7 @@ def _min(params):
 def _max(params):
 	v=None
 	for p in params:
-		if (v==None):
+		if (v is None):
 			v=p.value
 		else:
 			v=max(v,p.value)

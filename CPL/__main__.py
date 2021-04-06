@@ -48,7 +48,7 @@ elif ("--run" in sys.argv):
 	for a in sys.argv:
 		if (a[0]!="-"):
 			p=a+".ccpl"
-	if (p==None):
+	if (p is None):
 		p=glob.glob(os.path.join(os.getcwd(),"*.ccpl"))[0]
 	p=os.path.abspath(os.path.join(os.getcwd(),p))
 	ctypes.windll.kernel32.SetConsoleTitleW("Running \u2012 "+os.path.abspath(p))

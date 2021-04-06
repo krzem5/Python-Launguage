@@ -1,12 +1,9 @@
-import _random
 import colorama
-import hashlib
 import importlib
 import json
 import ntpath
 import os
 import pickle
-import re
 import shutil
 import sys
 import time
@@ -530,7 +527,6 @@ class Compiler:
 			ST=time.time()
 		if (C==True):
 			seq=Compiler.LINE_BREAK_CHAR+seq+Compiler.LINE_BREAK_CHAR
-			nl=[]
 			M=0
 			i=0
 			while (i<len(seq)):
@@ -544,10 +540,10 @@ class Compiler:
 					b=None
 					while (b!=0):
 						if (seq[i]==Compiler.FOR_COND_START_CHAR):
-							if (b==None):b=0
+							if (b is None):b=0
 							b+=1
 						if (seq[i]==Compiler.FOR_COND_END_CHAR):
-							if (b==None):b=0
+							if (b is None):b=0
 							b-=1
 						i+=1
 					continue
@@ -611,19 +607,17 @@ class Compiler:
 					elif (ntpath.isfile(p+Compiler.IMPORT_MODULE_CPL_EXT)):
 						mt=Compiler.IMPORT_MODULE_CPL
 					else:
-						p=ntpath.join(os.getcwd(),nm)
 						return ImportError(S[:-1]+[[S[-1],li+1,seq.split(Compiler.LINE_BREAK_CHAR)[li+1].replace(Compiler.LINE_BREAK_ESCAPE_CHAR,"")]],f"Module '{nm}' not found :(")
 				if (mt==Compiler.IMPORT_MODULE_PYTHON):
 					data=None
 					with open(p+Compiler.IMPORT_MODULE_PYTHON_FORMAT) as f:
 						data=json.loads(f.read())
-					imfl=[]
 					tmp=shutil.copy(p+Compiler.IMPORT_MODULE_PYTHON_EXT,ntpath.join(ntpath.split(__file__)[0],TEMP_FOLDER_PATH)+"_"+nm+Compiler.IMPORT_MODULE_PYTHON_EXT)
 					m=importlib.import_module("_"+nm)
 					fl=[]
 					for f in data["functions"]:
 						pl=[]
-						if (f["params"]==None):
+						if (f["params"] is None):
 							pl=None
 						else:
 							for k in f["params"]:
@@ -1158,7 +1152,7 @@ class Compiler:
 							if (tv.name==nm):
 								v=tv
 								break
-						if (v==None):
+						if (v is None):
 							return SyntaxError(S[:-1]+[[S[-1],li+1,seq.split(Compiler.LINE_BREAK_CHAR)[li+1].replace(Compiler.LINE_BREAK_ESCAPE_CHAR,"")]],f"Unknown Variable: Unknown variable '{nm}'")
 						if (seq[i]!=Compiler.VAR_DEF_ASSIGN_CHAR and seq[i+1]!=Compiler.VAR_DEF_ASSIGN_CHAR):
 							c=seq[i].replace(Compiler.LINE_BREAK_CHAR,"\\n").replace(Compiler.TAB_CHAR,"\\t")
@@ -1404,7 +1398,7 @@ class Compiler:
 						if (((i<len(seq) and seq[i]!=Compiler.CLASS_ATTR_SPLIT_CHAR) or (i>=len(seq))) and (i>=len(seq) or seq[i] not in Compiler.ALLOWED_CLASS_NAME_CHARS)):
 							nm=None
 							break
-					if (nm==None):
+					if (nm is None):
 						i=si
 					else:
 						i+=1
@@ -1413,7 +1407,7 @@ class Compiler:
 							if (tc.name==nm):
 								cl=tc
 								break
-						if (cl==None):
+						if (cl is None):
 							return SyntaxError(S,f"Unknown Class: Class '{nm}' doesn't exist")
 						#############################
 						fnm=""
@@ -1428,7 +1422,7 @@ class Compiler:
 								if (cf.name==fnm):
 									f=cf
 									break
-							if (f==None):
+							if (f is None):
 								return SyntaxError(S,f"Unknown Function: Function '{fnm}' doesn't exist")
 							p=[""]
 							pi=0
@@ -1448,7 +1442,7 @@ class Compiler:
 								if (b!=0 and i>=len(seq)):
 									return BracketError(S,f"Found '{Compiler.FUNC_PARAMS_START_CHAR}' without a pair")
 							ptl=[]
-							if (f.params==None):
+							if (f.params is None):
 								ptl=None
 							else:
 								for k in f.params:
@@ -1478,7 +1472,7 @@ class Compiler:
 							if (cf.name==nm):
 								f=cf
 								break
-						if (f==None):
+						if (f is None):
 							return SyntaxError(S,f"Unknown Function: Function '{nm}' doesn't exist")
 						p=[""]
 						pi=0
@@ -1498,7 +1492,7 @@ class Compiler:
 							if (b!=0 and i>=len(seq)):
 								return BracketError(S,f"Found '{Compiler.FUNC_PARAMS_START_CHAR}' without a pair")
 						ptl=[]
-						if (f.params==None):
+						if (f.params is None):
 							ptl=None
 						else:
 							for k in f.params:
@@ -1574,7 +1568,7 @@ class Compiler:
 						op=Compiler.OP_MOD
 					if (seq[i]==Compiler.OP_POW):
 						op=Compiler.OP_POW
-					if (op==None):
+					if (op is None):
 						return UnsupportedOperatorError(S,f"Unknown operator '{seq[i]}'")
 					M=True
 					A+=[{"t":"operator","v":op}]
@@ -1637,7 +1631,7 @@ class Compiler:
 				i+=1
 			r.append(t2)
 			C+=[A]
-		if (RT is not None and not ((len(r)==1 and r[0]==None) or (len(r)>1))):
+		if (RT is not None and not ((len(r)==1 and r[0] is None) or (len(r)>1))):
 			l1=""
 			if (len(RT)>=1 and RT[0]!=""):
 				for k in RT:
@@ -1661,7 +1655,7 @@ class Compiler:
 					return ArgumentError(S,f"Variable {l1.split(', ')[0]}{FN} is not applicable for {l2.split(', ')[0]}")
 			i=0
 			while (i<len(r)):
-				if (RT[i]==None):
+				if (RT[i] is None):
 					i+=1
 					continue
 				if ((r[i]=="float" or r[i]=="int") and (RT[i]=="float" or RT[i]=="int")):
@@ -1872,13 +1866,12 @@ class Compiler:
 					data=None
 					with open(cmd["d"]) as f:
 						data=json.loads(f.read())
-					imfl=[]
 					tmp=shutil.copy(cmd["v"],ntpath.join(ntpath.split(__file__)[0],TEMP_FOLDER_PATH)+"_"+cmd["n"]+Compiler.IMPORT_MODULE_PYTHON_EXT)
 					m=importlib.import_module("_"+cmd["n"])
 					fl=[]
 					for f in data["functions"]:
 						pl=[]
-						if (f["params"]==None):
+						if (f["params"] is None):
 							pl=None
 						else:
 							for k in f["params"]:
@@ -1918,7 +1911,7 @@ class Compiler:
 
 	@staticmethod
 	def eval_params(c,VL=[],FL=[],CL=[],L=None):
-		if (L==None):
+		if (L is None):
 			L=Compiler.MAX_OP_LVL
 		r=[]
 		for seq in c:
@@ -2074,14 +2067,14 @@ class Compiler:
 					if (seq[i][j-1]["t"]==Compiler.COND_NOT_MORE_CHAR):
 						v=(v1<=v2)
 					l=r
-					if (o==None):
+					if (o is None):
 						o=v
 					else:
 						if (o==True and v==True):
 							o=True
 						else:
 							o=False
-			if (O==None):
+			if (O is None):
 				O=o
 			else:
 				if (seq[i-1]["t"]=="and"):
