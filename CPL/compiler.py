@@ -109,7 +109,7 @@ class Class:
 
 
 class Function:
-	def __init__(self,name,r_type,params,code,af,av,ac):
+	def __init__(self,name,r_type,params,code,af,av,ac,nt=False):
 		self.name=name
 		self.r_type=r_type
 		self.params=params
@@ -118,7 +118,7 @@ class Function:
 		self.av=av
 		self.ac=ac
 		self.import_=None
-		self.native=False
+		self.native=nt
 	def __str__(self):
 		return self.__repr__()
 	def __repr__(self):
@@ -172,8 +172,7 @@ class Variable:
 
 class _Print(Function):
 	def __init__(self):
-		super().__init__("print","void",None,"",[],[],[])
-		self.native=True
+		super().__init__("print","void",None,"",[],[],[],nr=True)
 
 
 
@@ -192,8 +191,7 @@ class _Print(Function):
 
 class _Println(Function):
 	def __init__(self):
-		super().__init__("println","void",None,"",[],[],[])
-		self.native=True
+		super().__init__("println","void",None,"",[],[],[],nr=True)
 
 
 
@@ -212,8 +210,7 @@ class _Println(Function):
 
 class _Warn(Function):
 	def __init__(self):
-		super().__init__("warn","void",None,"",[],[],[])
-		self.native=True
+		super().__init__("warn","void",None,"",[],[],[],nr=True)
 
 
 
@@ -232,8 +229,7 @@ class _Warn(Function):
 
 class _Error(Function):
 	def __init__(self):
-		super().__init__("error","void",None,"",[],[],[])
-		self.native=True
+		super().__init__("error","void",None,"",[],[],[],nr=True)
 
 
 
@@ -252,8 +248,7 @@ class _Error(Function):
 
 class _Clear(Function):
 	def __init__(self):
-		super().__init__("clear","void",None,"",[],[],[])
-		self.native=True
+		super().__init__("clear","void",None,"",[],[],[],nr=True)
 
 
 
@@ -265,8 +260,7 @@ class _Clear(Function):
 
 class _Int(Function):
 	def __init__(self):
-		super().__init__("int","int",[Variable("",None,"param")],"",[],[],[])
-		self.native=True
+		super().__init__("int","int",[Variable("",None,"param")],"",[],[],[],nr=True)
 
 
 
@@ -295,8 +289,7 @@ class _Int(Function):
 
 class _Float(Function):
 	def __init__(self):
-		super().__init__("float","float",[Variable("",None,"param")],"",[],[],[])
-		self.native=True
+		super().__init__("float","float",[Variable("",None,"param")],"",[],[],[],nr=True)
 
 
 
@@ -331,8 +324,7 @@ class _Float(Function):
 
 class _Str(Function):
 	def __init__(self):
-		super().__init__("str","string",[Variable("",None,"param")],"",[],[],[])
-		self.native=True
+		super().__init__("str","string",[Variable("",None,"param")],"",[],[],[],nr=True)
 
 
 
@@ -354,8 +346,7 @@ class _Str(Function):
 
 class _Bool(Function):
 	def __init__(self):
-		super().__init__("bool","bool",[Variable("",None,"param")],"",[],[],[])
-		self.native=True
+		super().__init__("bool","bool",[Variable("",None,"param")],"",[],[],[],nr=True)
 
 
 
@@ -514,13 +505,14 @@ class Compiler:
 
 
 	@staticmethod
-	def compile(seq,VL=[],FL=[],CL=[],S=[],E=True,D=False,C=True):
+	def compile(seq,VL=[],_FL=[],CL=[],S=[],E=True,D=False,C=True):
 		def check_start(seq,i):
 			while (seq[i] not in Compiler.LINE_BREAK_CHARS):
 				if (seq[i]!=Compiler.SPACE_CHAR and seq[i]!=Compiler.TAB_CHAR):
 					return False
 				i-=1
 			return True
+		FL=_FL[:]
 		ST=0
 		if (D==True):
 			print("DEBUG \u2012 Compiling "+S[0]+"...")
@@ -1802,9 +1794,10 @@ class Compiler:
 
 
 	@staticmethod
-	def run(seq,VL=[],FL=[],CL=[],GCL=False):
+	def run(seq,VL=[],_FL=[],CL=[],GCL=False):
 		if (type(seq)==bytes):
 			seq=json.loads(pickle.loads(seq))
+		FL=_FL[:]
 		fnl=[]
 		for f in FL:
 			fnl.append(f.name)
@@ -1906,6 +1899,7 @@ class Compiler:
 				write_warn("\nUNKNOWN COMMAND: "+str(cmd)+"\n")
 		if (GCL==True):
 			return CL
+		return None
 
 
 
