@@ -172,7 +172,7 @@ class Variable:
 
 class _Print(Function):
 	def __init__(self):
-		super().__init__("print","void",None,"",[],[],[],nr=True)
+		super().__init__("print","void",None,"",[],[],[],nt=True)
 
 
 
@@ -191,7 +191,7 @@ class _Print(Function):
 
 class _Println(Function):
 	def __init__(self):
-		super().__init__("println","void",None,"",[],[],[],nr=True)
+		super().__init__("println","void",None,"",[],[],[],nt=True)
 
 
 
@@ -210,7 +210,7 @@ class _Println(Function):
 
 class _Warn(Function):
 	def __init__(self):
-		super().__init__("warn","void",None,"",[],[],[],nr=True)
+		super().__init__("warn","void",None,"",[],[],[],nt=True)
 
 
 
@@ -229,7 +229,7 @@ class _Warn(Function):
 
 class _Error(Function):
 	def __init__(self):
-		super().__init__("error","void",None,"",[],[],[],nr=True)
+		super().__init__("error","void",None,"",[],[],[],nt=True)
 
 
 
@@ -248,7 +248,7 @@ class _Error(Function):
 
 class _Clear(Function):
 	def __init__(self):
-		super().__init__("clear","void",None,"",[],[],[],nr=True)
+		super().__init__("clear","void",None,"",[],[],[],nt=True)
 
 
 
@@ -260,7 +260,7 @@ class _Clear(Function):
 
 class _Int(Function):
 	def __init__(self):
-		super().__init__("int","int",[Variable("",None,"param")],"",[],[],[],nr=True)
+		super().__init__("int","int",[Variable("",None,"param")],"",[],[],[],nt=True)
 
 
 
@@ -289,7 +289,7 @@ class _Int(Function):
 
 class _Float(Function):
 	def __init__(self):
-		super().__init__("float","float",[Variable("",None,"param")],"",[],[],[],nr=True)
+		super().__init__("float","float",[Variable("",None,"param")],"",[],[],[],nt=True)
 
 
 
@@ -324,7 +324,7 @@ class _Float(Function):
 
 class _Str(Function):
 	def __init__(self):
-		super().__init__("str","string",[Variable("",None,"param")],"",[],[],[],nr=True)
+		super().__init__("str","string",[Variable("",None,"param")],"",[],[],[],nt=True)
 
 
 
@@ -346,7 +346,7 @@ class _Str(Function):
 
 class _Bool(Function):
 	def __init__(self):
-		super().__init__("bool","bool",[Variable("",None,"param")],"",[],[],[],nr=True)
+		super().__init__("bool","bool",[Variable("",None,"param")],"",[],[],[],nt=True)
 
 
 
