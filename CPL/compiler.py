@@ -504,6 +504,7 @@ class Compiler:
 	ALLOWED_CLASS_NAME_CHARS="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_"
 
 
+
 	@staticmethod
 	def compile(seq,VL=[],_FL=[],CL=[],S=[],E=True,D=False,C=True):
 		def check_start(seq,i):
