@@ -1,6 +1,5 @@
 from .compiler import Compiler
 import colorama
-import ctypes
 import glob
 import os
 import sys
@@ -33,7 +32,6 @@ if ("--compile" in sys.argv):
 		p=os.path.abspath(os.path.join(os.getcwd(),p))
 		if (not os.path.isfile(p)):
 			continue
-		ctypes.windll.kernel32.SetConsoleTitleW("Compiling \u2012 "+os.path.abspath(p))
 		op=os.path.abspath(p).rsplit(".",1)[0]+".ccpl"
 		with open(p,"r") as f:
 			e=Compiler.compile(f.read(),S=[os.path.abspath(p)],D=D)
@@ -51,7 +49,6 @@ elif ("--run" in sys.argv):
 	if (p is None):
 		p=glob.glob(os.path.join(os.getcwd(),"*.ccpl"))[0]
 	p=os.path.abspath(os.path.join(os.getcwd(),p))
-	ctypes.windll.kernel32.SetConsoleTitleW("Running \u2012 "+os.path.abspath(p))
 	with open(os.path.abspath(p),"rb") as f:
 		Compiler.run(f.read())
 else:
